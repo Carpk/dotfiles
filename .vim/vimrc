@@ -1,0 +1,29 @@
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+call vundle#end()
+filetype plugin indent on
+
+" pathogen install
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+
+" size of a hard tabstop
+set tabstop=2
+
+" always uses spaces instead of tab characters
+set expandtab
+
+filetype indent on
+set autoindent
+set cindent
+
+set autoread
+
+setlocal shiftwidth=2
+setlocal tabstop=2
+
+colorscheme elflord
