@@ -1,0 +1,90 @@
+background yes
+use_xft yes
+xftfont Arial:size=4
+xftalpha 1
+update_interval 1.0
+total_run_times 0
+own_window yes
+own_window_transparent yes
+own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 300 200
+maximum_width 165
+draw_shades yes
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color white
+default_shade_color black
+default_outline_color white
+alignment top_right
+gap_x 12
+gap_y 12
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale no
+
+TEXT
+${font Terminus:bold:size=7}SYSTEM ${hr 2}
+${font Terminus:normal:size=6}$sysname $kernel $alignr $machine
+Host:$alignr$nodename
+Uptime:$alignr$uptime
+File System: $alignr${fs_type}
+Battery: ${battery_percent BAT0}% ${alignr}${battery_bar 8,60 BAT0}
+
+${font Terminus:bold:size=7}PROCESSORS ${hr 2}
+${font Terminus:normal:size=6}${cpugraph cpu1}
+CPU1: ${cpu cpu1}% ${cpubar cpu1}
+CPU2: ${cpu cpu2}% ${cpubar cpu2}
+CPU3: ${cpu cpu3}% ${cpubar cpu3}
+CPU4: ${cpu cpu4}% ${cpubar cpu4}
+
+${font Terminus:bold:size=7}MEMORY ${hr 2}
+${font Terminus:normal:size=6}RAM $alignc $mem / $memmax $alignr $memperc%
+$membar
+
+${font Terminus:bold:size=7}DISKS ${hr 2}
+${font Terminus:normal:size=6}/dev/sda1 $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
+${fs_bar /}
+
+${font Terminus:bold:size=7}TOP PROCESSES ${hr 2}
+${font Terminus:normal:size=6}${top_mem name 1}${alignr}${top mem 1} %
+${top_mem name 2}${alignr}${top mem 2} %
+${top_mem name 3}${alignr}${top mem 3} %
+${top_mem name 4}${alignr}${top mem 4} %
+${top_mem name 5}${alignr}${top mem 5} %
+${top_mem name 6}${alignr}${top mem 6} %
+${top_mem name 7}${alignr}${top mem 7} %
+${top_mem name 8}${alignr}${top mem 8} %
+${top_mem name 9}${alignr}${top mem 9} %
+
+${font Terminus:bold:size=7}NETWORK ${hr 2}
+${font Terminus:normal:size=6}IP address: $alignr ${addr wlan0}
+Host name: $alignr ${wireless_essid wlan0}
+Connection quality: $alignr ${wireless_link_qual_perc wlan0}%
+${downspeedgraph wlan0}
+DLS:${downspeed wlan0} kb/s $alignr total: ${totaldown wlan0}
+${upspeedgraph wlan0}
+ULS:${upspeed wlan0} kb/s $alignr total: ${totalup wlan0}
+
+${font Terminus:bold:size=7}WEATHER ${hr 2}
+${execi 600 bash $HOME/1d_accuweather_rss/1d}\
+${font conkyweather:size=30}${color8}${execpi 600  sed -n '2p' $HOME/1d_accuweather_rss/weather}${color}${font Terminus:normal:size=6}
+${voffset -40}${goto 65}${color1}Chicago IL${color}
+${goto 65}Currently:
+${goto 65}${execpi 600 sed -n '1p' $HOME/1d_accuweather_rss/weather|cut -d ' ' -f2-|fold -s -w32}
+
+${GOTO 65}${color1}FORECAST${color}
+
+${font conkyweather:size=30}${color8}${execpi 600  sed -n '5p' $HOME/1d_accuweather_rss/weather}${color}${font Terminus:normal:size=6}
+${voffset -40}${goto 65}${color1}${execi 3600 echo `date --date="0 day" | awk '{print $1" "$3" "$2" "$6}'`}${color}
+${goto 65}${execpi 600 sed -n '4p' $HOME/1d_accuweather_rss/weather|cut -d ' ' -f-6}
+${goto 65}${execpi 600 sed -n '4p' $HOME/1d_accuweather_rss/weather|cut -d ' ' -f7-|fold -s -w32}
+
+${font conkyweather:size=30}${color8}${execpi 600  sed -n '8p' $HOME/1d_accuweather_rss/weather}${color}${font Terminus:normal:size=6}
+${voffset -40}${goto 65}${color1}${execi 3600 echo `date --date="1 day" | awk '{print $1" "$3" "$2" "$6}'`}${color}
+${goto 65}${execpi 600 sed -n '7p' $HOME/1d_accuweather_rss/weather|cut -d ' ' -f-6}
+${goto 65}${execpi 600 sed -n '7p' $HOME/1d_accuweather_rss/weather|cut -d ' ' -f7-|fold -s -w32}
+
